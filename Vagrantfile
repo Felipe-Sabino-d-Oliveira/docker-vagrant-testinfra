@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
 
     vb.name = "test-infra-server"
     vb.memory = 2048
-    vb.cpus = 2
+    vb.cpus = 1
 
   end
 
