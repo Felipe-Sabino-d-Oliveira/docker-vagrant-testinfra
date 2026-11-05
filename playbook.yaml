@@ -1,0 +1,40 @@
+---
+- name: Configurar servidor web
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Atualizar a lista de pacotes
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Instalar o Apache
+      ansible.builtin.apt:
+        name: apache2
+        state: present
+
+    - name: Iniciar e habilitar o Apache
+      ansible.builtin.service:
+        name: apache2
+        state: started
+        enabled: true
+
+    - name: Criar a pagina inicial
+      ansible.builtin.copy:
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          <!DOCTYPE html>
+          <html lang="pt-BR">
+          <head>
+            <meta charset="UTF-8">
+            <title>Atividade DevOps</title>
+          </head>
+          <body>
+            <h1>Servidor Apache funcionando!</h1>
+            <p>Pagina configurada com Ansible.</p>
+          </body>
+          </html>
